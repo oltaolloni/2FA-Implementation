@@ -30,20 +30,6 @@ public class SignupActivity extends AppCompatActivity {
         final Button signUpBtn = findViewById(R.id.signUpBtn);
         final TextView signInBtn = findViewById(R.id.signInBtn);
 
-//        signUpBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                final String getEmailTxt = email.getText().toString();
-//
-//                //Hapet OTP verifikimi bashke me numrin dhe emailin
-//                Intent intent = new Intent(SignupActivity.this, VerifyActivity.class);
-//
-//                intent.putExtra("email", getEmailTxt);
-//
-//                startActivity(intent);
-//            }
-//        });
-
         signInBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -14,8 +14,8 @@ public class MailSender {
 
     private final String host = "smtp.gmail.com";
     private final String port = "587";
-    private final String userEmail = "your-email@gmail.com";
-    private final String userPassword = "your-password";
+    private final String userEmail = "senderEmail@gmail.com";
+    private final String userPassword = "senderPassword";
 
     public void sendOtpEmail(String recipientEmail, String otp) throws MessagingException {
         Properties properties = new Properties();

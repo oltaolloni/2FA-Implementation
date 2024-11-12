@@ -24,38 +24,40 @@ import javax.mail.MessagingException;
 public class LoginActivity extends AppCompatActivity {
 
     private MailSender mailSender = new MailSender();
+    private String userEmail = "receiverEmail@gmail.com";
+    private String userPass = "receiverPassword";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
 
         final EditText emailET = findViewById(R.id.emailET);
         final EditText passwordET = findViewById(R.id.passwordET);
         final TextView signUpBtn = findViewById(R.id.signUpBtn);
         final Button signInBtn = findViewById(R.id.signInBtn);
-        final ProgressBar progressBar = findViewById(R.id.progressBar);
 
         signInBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String email = emailET.getText().toString().trim();
-                if (email.isEmpty()) {
-                    Toast.makeText(LoginActivity.this, "Enter Email", Toast.LENGTH_SHORT).show();
+                String pass = passwordET.getText().toString().trim();
+                if (email.isEmpty() || pass.isEmpty()) {
+                    Toast.makeText(LoginActivity.this, "Enter email and password", Toast.LENGTH_SHORT).show();
                     return;
+                } else if(email.equals(userEmail) && pass.equals(userPass)){
+                    String otp = generateOtp();
+                    sendOtpEmail(email, otp);
+
+                    Intent intent = new Intent(LoginActivity.this, VerifyActivity.class);
+                    intent.putExtra("email", email);
+                    intent.putExtra("otp", otp);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(LoginActivity.this, "Invalid email or password", Toast.LENGTH_SHORT).show();
                 }
-                progressBar.setVisibility(View.VISIBLE);
-                signInBtn.setVisibility(View.INVISIBLE);
 
-                // Call a backend function to generate and send the OTP email
-                String otp = generateOtp();
-                sendOtpEmail(email, otp);
 
-                Intent intent = new Intent(LoginActivity.this, VerifyActivity.class);
-                intent.putExtra("email", email);
-                intent.putExtra("otp", otp);
-                startActivity(intent);
             }
         });
 
@@ -68,12 +70,14 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    //Funksioni qe gjeneron nje random OTP
     private String generateOtp() {
         Random random = new Random();
         int otp = 100000 + random.nextInt(900000); // 6-digit OTP
         return String.valueOf(otp);
     }
 
+    //Funksioni qe dergon OTP ne emailin e caktuar
     private void sendOtpEmail(String email, String otp) {
         new Thread(() -> {
             try {
