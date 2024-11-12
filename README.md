@@ -1,1 +1,2 @@
-# OTP-Implementation
+# 2FA-Implementation
+This Android application project allows users to receive a one-time password (OTP) via email for authentication or verification purposes. The project demonstrates how to set up email-based OTP sending functionality, including configurations for Gmail-based email sending. This OTP is a randomly generated 6-digit code, commonly used in verification processes for login or account recovery. When a user initiates an OTP request in the app, they receive this code via email, which they can use to complete a verification process.
